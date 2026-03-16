@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hunter Family · Payment Summary · March 15, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2035;
+    --navy-mid: #1a3a5c;
+    --gold: #c9a84c;
+    --gold-light: #e8c87a;
+    --green: #2d7a4f;
+    --green-light: #e8f5ee;
+    --slate: #4a5568;
+    --light: #f7f9fc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #2d3748;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 3rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 120%, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+
+  .header-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .header-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    position: relative;
+  }
+
+  .header-divider {
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.25rem auto;
+    position: relative;
+  }
+
+  .summary-banner {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1.75rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .summary-stat { text-align: center; }
+
+  .summary-stat-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 0.3rem;
+  }
+
+  .summary-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .summary-stat-value.green { color: var(--green); }
+  .summary-divider-v { width: 1px; height: 40px; background: var(--border); }
+
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .payment-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .payment-card:hover {
+    box-shadow: 0 8px 30px rgba(15,32,53,0.08);
+    transform: translateY(-2px);
+  }
+
+  .payment-card:nth-child(1) { animation-delay: 0.1s; }
+  .payment-card:nth-child(2) { animation-delay: 0.2s; }
+  .payment-card:nth-child(3) { animation-delay: 0.3s; }
+  .payment-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .icon-navy  { background: rgba(15,32,53,0.08); }
+  .icon-green { background: var(--green-light); }
+  .icon-gold  { background: rgba(201,168,76,0.12); }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 0.15rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.75rem;
+    color: var(--slate);
+    font-weight: 300;
+  }
+
+  .card-amount { text-align: right; flex-shrink: 0; }
+
+  .amount-total {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .amount-label {
+    font-size: 0.65rem;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.2rem;
+  }
+
+  .card-body {
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .detail-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 0.25rem;
+  }
+
+  .detail-value {
+    font-size: 0.88rem;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .detail-value.mono {
+    font-size: 0.8rem;
+    color: var(--slate);
+    word-break: break-all;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+  }
+
+  .badge-paid {
+    background: var(--green-light);
+    color: var(--green);
+    border: 1px solid rgba(45,122,79,0.2);
+  }
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .card-footer {
+    padding: 0.75rem 1.5rem;
+    background: var(--light);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .card-footer-text {
+    font-size: 0.72rem;
+    color: var(--slate);
+  }
+
+  .card-footer-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .breakdown {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .breakdown-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--light);
+    font-size: 0.88rem;
+  }
+
+  .breakdown-row:last-of-type { border-bottom: none; }
+  .breakdown-row-amount { font-weight: 500; color: var(--navy); }
+
+  .breakdown-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: var(--navy);
+    margin-top: 0.75rem;
+  }
+
+  .breakdown-total-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .breakdown-total-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--gold-light);
+  }
+
+  .page-footer {
+    background: var(--navy);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-text { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1rem auto;
+  }
+
+  @media (max-width: 600px) {
+    .summary-banner { gap: 1.5rem; }
+    .summary-divider-v { display: none; }
+    .card-body { grid-template-columns: 1fr 1fr; }
+    .card-header { flex-direction: column; align-items: flex-start; }
+    .card-amount { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <p class="header-eyebrow">Hunter Family · Houston, TX</p>
+  <h1 class="header-title">Payment Summary</h1>
+  <div class="header-divider"></div>
+  <p class="header-subtitle">All payments made on Sunday, March 15, 2026 · Paid in Full</p>
+</header>
+
+<div class="summary-banner">
+  <div class="summary-stat">
+    <p class="summary-stat-label">Payments Made</p>
+    <p class="summary-stat-value">4</p>
+  </div>
+  <div class="summary-divider-v"></div>
+  <div class="summary-stat">
+    <p class="summary-stat-label">Total Paid</p>
+    <p class="summary-stat-value">$10,719.58</p>
+  </div>
+  <div class="summary-divider-v"></div>
+  <div class="summary-stat">
+    <p class="summary-stat-label">Status</p>
+    <p class="summary-stat-value green">✓ Clear</p>
+  </div>
+  <div class="summary-divider-v"></div>
+  <div class="summary-stat">
+    <p class="summary-stat-label">Date</p>
+    <p class="summary-stat-value" style="font-size:1.2rem;">Mar 15, 2026</p>
+  </div>
+</div>
+
+<main class="main">
+  <p class="section-label">Payment Receipts</p>
+
+  <!-- 1. Harris County -->
+  <div class="payment-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon icon-navy">🏛️</div>
+        <div>
+          <p class="card-title">Harris County Property Tax</p>
+          <p class="card-subtitle">MyHarrisCountyTax · Account #1283940020020</p>
+        </div>
+      </div>
+      <div class="card-amount">
+        <p class="amount-total">$3,258.09</p>
+        <p class="amount-label">Total Paid</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="detail-item">
+        <p class="detail-label">Bill Year</p>
+        <p class="detail-value">2025</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Property Owner</p>
+        <p class="detail-value">Kevin Hunter</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Payment Method</p>
+        <p class="detail-value">Bank of America ···5861</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Date Paid</p>
+        <p class="detail-value">March 15, 2026 · 9:53 PM</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Confirmation</p>
+        <p class="detail-value mono">367f6c8e-bd69-48d4</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Status</p>
+        <span class="status-badge badge-paid"><span class="badge-dot"></span> Paid in Full</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="card-footer-text">Property: <strong>13715 Kingston River Lane, Houston TX 77044</strong></p>
+      <p class="card-footer-text">Remaining Balance: <strong>$0.00</strong></p>
+    </div>
+  </div>
+
+  <!-- 2. Humble ISD -->
+  <div class="payment-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon icon-green">🏫</div>
+        <div>
+          <p class="card-title">Humble ISD Property Tax</p>
+          <p class="card-subtitle">Humble ISD Tax Office · Account #128-394-002-0020</p>
+        </div>
+      </div>
+      <div class="card-amount">
+        <p class="amount-total">$3,956.54</p>
+        <p class="amount-label">Total Paid</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="detail-item">
+        <p class="detail-label">Tax Year</p>
+        <p class="detail-value">2025</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Base Tax</p>
+        <p class="detail-value">$3,629.85</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Penalty & Interest</p>
+        <p class="detail-value">$326.69</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Taxable Value</p>
+        <p class="detail-value">$328,434.00</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Payment Method</p>
+        <p class="detail-value">eCheck Web · #29968200</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Receipt #</p>
+        <p class="detail-value mono">8227298</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Exemption</p>
+        <p class="detail-value">General Homestead</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Status</p>
+        <span class="status-badge badge-paid"><span class="badge-dot"></span> Paid in Full</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="card-footer-text">Property: <strong>0013715 Kingston River Ln · LT 20 BLK 2, Summerwood Sec 29</strong></p>
+      <p class="card-footer-text">Remaining as of 3/15/26: <strong>$0.00</strong></p>
+    </div>
+  </div>
+
+  <!-- 3. ASW -->
+  <div class="payment-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon icon-gold">🏠</div>
+        <div>
+          <p class="card-title">Assessments of the Southwest (ASW)</p>
+          <p class="card-subtitle">Account #R000081663</p>
+        </div>
+      </div>
+      <div class="card-amount">
+        <p class="amount-total">$2,392.56</p>
+        <p class="amount-label">Total Paid</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="detail-item">
+        <p class="detail-label">Bill Amount</p>
+        <p class="detail-value">$2,389.57</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Convenience Fee</p>
+        <p class="detail-value">$2.99</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Payment Type</p>
+        <p class="detail-value">Manual Check</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Account Ending</p>
+        <p class="detail-value">···5861</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Date & Time</p>
+        <p class="detail-value">03/15/2026 · 11:22 PM</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Confirmation #</p>
+        <p class="detail-value mono">347299030</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Payor</p>
+        <p class="detail-value">Kevin Hunter</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Status</p>
+        <span class="status-badge badge-paid"><span class="badge-dot"></span> Paid in Full</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="card-footer-text">Assessments of the Southwest, Inc. · HOA Assessment</p>
+    </div>
+  </div>
+
+  <!-- 4. Summerwood HOA -->
+  <div class="payment-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon icon-navy">🌳</div>
+        <div>
+          <p class="card-title">Summerwood Community Association</p>
+          <p class="card-subtitle">HOA Dues · Account #SWC1643</p>
+        </div>
+      </div>
+      <div class="card-amount">
+        <p class="amount-total">$1,112.39</p>
+        <p class="amount-label">Total Paid</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="detail-item">
+        <p class="detail-label">HOA Amount</p>
+        <p class="detail-value">$1,109.40</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Admin Fee</p>
+        <p class="detail-value">$2.99</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Association</p>
+        <p class="detail-value">Summerwood Community Association Inc.</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Confirmation #</p>
+        <p class="detail-value mono">61446</p>
+      </div>
+      <div class="detail-item">
+        <p class="detail-label">Status</p>
+        <span class="status-badge badge-paid"><span class="badge-dot"></span> Paid in Full</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="card-footer-text">Summerwood Community Association Inc. · HOA Dues</p>
+    </div>
+  </div>
+
+  <!-- TOTAL BREAKDOWN -->
+  <div class="breakdown">
+    <h2 class="breakdown-title">Total Payment Breakdown</h2>
+    <div class="breakdown-row">
+      <span>🏛️ Harris County Property Tax (2025)</span>
+      <span class="breakdown-row-amount">$3,258.09</span>
+    </div>
+    <div class="breakdown-row">
+      <span>🏫 Humble ISD Property Tax (2025)</span>
+      <span class="breakdown-row-amount">$3,956.54</span>
+    </div>
+    <div class="breakdown-row">
+      <span>🏠 Assessments of the Southwest (ASW)</span>
+      <span class="breakdown-row-amount">$2,392.56</span>
+    </div>
+    <div class="breakdown-row">
+      <span>🌳 Summerwood Community Association (HOA)</span>
+      <span class="breakdown-row-amount">$1,112.39</span>
+    </div>
+    <div class="breakdown-total">
+      <span class="breakdown-total-label">Total Paid · March 15, 2026</span>
+      <span class="breakdown-total-amount">$10,719.58</span>
+    </div>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <p class="footer-title">All bills settled — now enjoy that Mediterranean trip! ✈️</p>
+  <div class="footer-divider"></div>
+  <p class="footer-text">Hunter Family · 13715 Kingston River Lane, Houston TX 77044 · All payments made 03/15/2026</p>
+</footer>
+
+</body>
+</html>
